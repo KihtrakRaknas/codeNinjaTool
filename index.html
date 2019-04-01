@@ -63,7 +63,7 @@
           setInterval(()=>{
               if(perm=="granted"){
                 navigator.clipboard.readText().then(text => {
-                    document.getElementById("txt").innerText = text
+                    //document.getElementById("txt").innerText = text
                     if(oldtxt != text){
                         parse(text,false);
                         oldtxt = text
