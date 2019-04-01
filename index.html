@@ -67,15 +67,15 @@
                     if(oldtxt != text){
                         parse(text,false);
                         oldtxt = text
+                        oldtxtBox = document.getElementById("txt").innerText
                     }
                 });
-              }else{
+              }
                   if(oldtxtBox!=document.getElementById("txt").innerText){
                     oldtxtBox = document.getElementById("txt").innerText
                     parse(oldtxtBox,false);
                   }
                 
-              }
 
           },500)
 
