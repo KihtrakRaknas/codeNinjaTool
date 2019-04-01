@@ -9,10 +9,22 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Single Line converter</title>
+
+    <style>
+        .err{
+            color:white;
+            background-color: red;
+        }
+        .good{
+            color:black;
+            background-color: white;
+        }
+        </style>
   </head>
   <body>
     <h1 class = "text-center">Paste Here</h1>
     <p class = "text-center">There is this <em>one</em> manuel that provides txt versions of their code but without any line breaks. Here is a tool to make your life easier:</p>
+    <p class = "text-center">(Code in red requires the user to figure out where to put the line break)</p>
     <div id="txt" contenteditable="true" style="border-style: solid; border-radius:5px;border-width:1px">
         TXT in your clipboard appears here
       </div>
@@ -25,6 +37,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
       <script>
           var perm = "prompt"
+          var oldtxt = "";
+          var oldtxtBox = document.getElementById("txt").innerText;
           navigator.permissions.query({
                 name: 'clipboard-read'
             }).then(permissionStatus => {
@@ -39,8 +53,22 @@
             });
             navigator.clipboard.readText()
           setInterval(()=>{
-              if(perm=="granted")
-            navigator.clipboard.readText().then(text => document.getElementById("txt").innerText = text);
+              if(perm=="granted"){
+                navigator.clipboard.readText().then(text => {
+                    document.getElementById("txt").innerText = text
+                    if(oldtxt != text){
+                        parse(text);
+                        oldtxt = text
+                    }
+                });
+              }else{
+                  if(oldtxtBox!=document.getElementById("txt").innerText){
+                    oldtxtBox = document.getElementById("txt").innerText
+                    parse(oldtxtBox);
+                  }
+                
+              }
+
           },500)
 
           function parse(str){
@@ -48,6 +76,9 @@
               var line="";
               while(str.length>0){
                 var char = str.substring(0,1)
+                var nextChar = ""
+                if(str.length>1)
+                nextChar = str.substring(1,2)
 
                 if(char==";"||char=="{"){
                     line+=char;
@@ -56,14 +87,53 @@
                 }else if(char=="}"){
                     out+=line+"\n"+char+"\n";
                     line = "";
+                }else if(char=="\n"&&nextChar=="\n"){
+                    //Do nothing
+                    console.log("DOYBLE")
                 }else{
                     line+=char;
                 }
                 str = str.substring(1)
               }
+              out+=line
+              str = out;
+              out = "";
+              line=""
+              while(str.length>0){
+                var char = str.substring(0,1)
+                var nextChar = ""
+                if(str.length>1)
+                nextChar = str.substring(1,2)
+                if(char=="\n"&&nextChar=="\n"){
+                    //Do nothing
+                    console.log("DOYBLE")
+                }else  if(char=="\n"){
+                    out+= turnToHTML(line)+"<br>";
+                    line = ""
+                }else{
+                    line+=char;
+                }
+                str = str.substring(1)
+              }
+              out+= turnToHTML(line);
+              console.log(out)
+              document.getElementById("txt").innerHTML = out
 
+              
           }
 
+          function turnToHTML(str){
+              var classs = "";
+              var title = ""
+              if(str.includes(";")&&str.includes("//")){
+                classs = "err";
+                title="There should probably be an line break somewhere here"
+              }else{
+                classs = "good";
+                title = "No errors found"
+              }
+              return "<span title=\""+title+"\" class=\""+classs+"\">"+str+"</span>"
+          }
 
         
           </script>
