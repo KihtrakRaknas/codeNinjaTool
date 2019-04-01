@@ -84,9 +84,9 @@
               var line="";
               while(str.length>0){
                 var char = str.substring(0,1)
-                var nextChar = ""
+                    var nextChar = ""
                 if(str.length>1)
-                nextChar = str.substring(1,2)
+                    nextChar = str.substring(1,2)
 
                 if(char==";"||char=="{"){
                     line+=char;
@@ -118,7 +118,7 @@
                 if(char=="\n"&&nextChar=="\n"){
                     //Do nothing
                     console.log("DOYBLE")
-                }else  if(char=="\n"&&out!=""){
+                }else  if(char=="\n"&&line!=""){
                     if(del){
                         if(!line.includes("//"))
                             out+= turnToHTML(line)+"<br>";
