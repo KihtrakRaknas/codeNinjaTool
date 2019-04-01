@@ -87,7 +87,7 @@
                     var nextChar = ""
                 if(str.length>1)
                     nextChar = str.substring(1,2)
-                if((line.includes("for{")&&char==";")||char=="{"){
+                if((!line.includes("for{")&&char==";")||char=="{"){
                     line+=char;
                     out+=line+"\n";
                     line = "";
