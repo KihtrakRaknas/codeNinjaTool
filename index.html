@@ -118,7 +118,7 @@
                 if(char=="\n"&&nextChar=="\n"){
                     //Do nothing
                     console.log("DOYBLE")
-                }else  if(char=="\n"){
+                }else  if(char=="\n"&&out!=""){
                     if(del){
                         if(!line.includes("//"))
                             out+= turnToHTML(line)+"<br>";
