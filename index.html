@@ -151,7 +151,7 @@
                 classs = "good";
                 title = "No errors found"
               }
-              return "<span title=\""+title+"\" class=\""+classs+"\">"+str+"</span>"
+              return "<span title=\""+title+"\" class=\""+classs+"\">"+str.replace("“","\"").replace("”","\"")+"</span>"
           }
 
           function del(){
