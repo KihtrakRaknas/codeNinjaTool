@@ -37,7 +37,7 @@
                 perm = permissionStatus.state
             };
             });
-
+            navigator.clipboard.readText()
           setInterval(()=>{
               if(perm=="granted")
             navigator.clipboard.readText().then(text => document.getElementById("txt").innerText = text);
