@@ -19,6 +19,9 @@
             color:black;
             background-color: white;
         }
+        .comment{
+            color:green;
+        }
         </style>
   </head>
   <body>
@@ -29,7 +32,8 @@
         TXT in your clipboard appears here
       </div>
 <br>
-<button type="button" class="btn btn-primary btn-lg btn-block">COPY</button>
+<button type="button" onclick="copy()" class="btn btn-primary btn-lg btn-block">COPY</button>
+<button type="button" onclick="del()" class="btn btn-danger btn-lg btn-block">Delete Comments (make sure to fix errors first)</button>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -57,21 +61,21 @@
                 navigator.clipboard.readText().then(text => {
                     document.getElementById("txt").innerText = text
                     if(oldtxt != text){
-                        parse(text);
+                        parse(text,false);
                         oldtxt = text
                     }
                 });
               }else{
                   if(oldtxtBox!=document.getElementById("txt").innerText){
                     oldtxtBox = document.getElementById("txt").innerText
-                    parse(oldtxtBox);
+                    parse(oldtxtBox,false);
                   }
                 
               }
 
           },500)
 
-          function parse(str){
+          function parse(str,del){
               var out = "";
               var line="";
               while(str.length>0){
@@ -108,7 +112,13 @@
                     //Do nothing
                     console.log("DOYBLE")
                 }else  if(char=="\n"){
-                    out+= turnToHTML(line)+"<br>";
+                    if(del){
+                        if(!line.includes("//"))
+                            out+= turnToHTML(line)+"<br>";
+                    }else{
+                        out+= turnToHTML(line)+"<br>";
+                    }
+
                     line = ""
                 }else{
                     line+=char;
@@ -128,14 +138,28 @@
               if(str.includes(";")&&str.includes("//")){
                 classs = "err";
                 title="There should probably be an line break somewhere here"
-              }else{
+              }else if(str.includes("//")){
+                classs = "comment";
+                title="This is a comment"
+              }else {
                 classs = "good";
                 title = "No errors found"
               }
               return "<span title=\""+title+"\" class=\""+classs+"\">"+str+"</span>"
           }
 
-        
+          function del(){
+            parse(document.getElementById("txt").innerText,true);
+          }
+
+          function copy(){
+            var txt = document.getElementById("txt").innerText;
+            navigator.clipboard.writeText(txt)
+
+          }
+
           </script>
 </body>
 </html>
+     
+    
