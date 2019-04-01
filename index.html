@@ -95,6 +95,9 @@
                 }else if(char=="}"){
                     out+=line+"\n"+char+"\n";
                     line = "";
+                }else if(char+nextChar=="//"){
+                    out+=+"\n"+line;
+                    line = "char";
                 }else if(char=="\n"&&nextChar=="\n"){
                     //Do nothing
                     console.log("DOYBLE")
