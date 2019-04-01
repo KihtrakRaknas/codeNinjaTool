@@ -141,7 +141,7 @@
           function turnToHTML(str){
               var classs = "";
               var title = ""
-              if(str.includes(";")&&(str.includes("//")||str.includes("{"))){
+              if(str.includes("//")&&(str.includes(";")||str.includes("{"))){
                 classs = "err";
                 title="There should probably be an line break somewhere here"
               }else if(str.includes("//")){
