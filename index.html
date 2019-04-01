@@ -48,6 +48,7 @@
             }).then(permissionStatus => {
             // Will be 'granted', 'denied' or 'prompt':
             console.log(permissionStatus.state);
+            perm = permissionStatus.state
 
             // Listen for changes to the permission state
             permissionStatus.onchange = () => {
