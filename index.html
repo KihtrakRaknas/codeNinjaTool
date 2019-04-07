@@ -138,7 +138,12 @@
                 }
                 str = str.substring(1)
               }
-              out+= turnToHTML(line);
+              if(del){
+                 if(!line.includes("//"))
+                      out+= turnToHTML(line);
+                 }else{
+                     out+= turnToHTML(line);
+                 }
               console.log(out)
               document.getElementById("txt").innerHTML = out
 
