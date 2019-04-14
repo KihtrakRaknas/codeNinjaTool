@@ -194,7 +194,7 @@
                 classs = "good";
                 title = "No errors found"
               }
-              return "<span title=\""+title+"\" class=\""+classs+"\">"+str.replace("“","\"").replace("”","\"").replace("‘","'").replace("’","'").replace(" "," "/*deal with NO-BREAK SPACE*/).replace("ﬁ","fi")+"</span>"
+              return "<span title=\""+title+"\" class=\""+classs+"\">"+str.replace("“","\"").replace("”","\"").replace("‘","'").replace("’","'").replace(" "," "/*deal with NO-BREAK SPACE*/).replace("ﬁ","fi").replace(/</g, "&lt;").replace(/>/g, "&gt;")+"</span>"
           }
 
           function del(){
