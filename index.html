@@ -72,7 +72,7 @@
       });
       
       document.getElementById("notes").addEventListener("input", function() {
-          firebase.database().ref('/codeNinjas/).update({
+          firebase.database().ref('/codeNinjas/').update({
              txt: document.getElementById("notes").innerText
       });
       }, false);
