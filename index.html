@@ -67,7 +67,7 @@
         messagingSenderId: "288023573199"
       };
       firebase.initializeApp(config);
-      firebase.database().ref('/codeNinjas/').on('value',function(snap){
+      firebase.database().ref('/codeNinjas/').once('value',function(snap){
         document.getElementById("notes").innerText = snap.val()["txt"]
       });
       
