@@ -44,12 +44,42 @@
                           <br><a href="https://dojo.code.ninja/students/curriculum/cn-nj-kendall-park/7uwdzqq7ip/index.html">White Belt</a>
                           <br><a href="https://docs.google.com/spreadsheets/d/1YWZlqHR5pwibqGbuEJy2ZHsy2Pt12tIcELNOhkbXcKM/edit#gid=0">Progress Tracker</a>
       </div> 
+      <h6>Synced Notes</h6>
+      <div id="notes" contenteditable="true" style="border-style: solid; border-radius:5px;border-width:1px">
+            Synced Notes
+        </div>
+      
     </div> 
-<!-- Optional JavaScript -->
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAjgdd8Bc-yxC4Ors8t76ZYXsavQABh5I4",
+        authDomain: "rick-roller.firebaseapp.com",
+        databaseURL: "https://rick-roller.firebaseio.com",
+        projectId: "rick-roller",
+        storageBucket: "rick-roller.appspot.com",
+        messagingSenderId: "288023573199"
+      };
+      firebase.initializeApp(config);
+      firebase.database().ref('/codeNinjas/).on('value',function(snap){
+        document.getElementById("notes").innerText = snap.val()["txt"]
+      });
+      
+      document.getElementById("notes").addEventListener("input", function() {
+          firebase.database().ref('/codeNinjas/).update({
+             txt: document.getElementById("notes").innerText
+      });
+      }, false);
+      
+      
+    </script>
+    
       <script>
           var perm = "prompt"
           var oldtxt = "";
